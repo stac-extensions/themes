@@ -1,53 +1,82 @@
-# Template Extension Specification
+# Subjects Extension Specification
 
-- **Title:** Template
-- **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json>
-- **Field Name Prefix:** template
+- **Title:** Subjects
+- **Identifier:** <https://stac-extensions.github.io/subjects/v1.0.0/schema.json>
+- **Field Name Prefix:** subjects
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @your-gh-handles @person2
+- **Owner**: @emmanuelmathot
 
-This document explains the Template Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-This is the place to add a short introduction.
+This document explains the Subjects Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
+This extension is meant to support using free and normalized keywords. particulary useful when searching for datasets within catalogs with free terms and subjects but also with normalized definition (e.g. geonames).
+This extension is inspired by the implementation made by [resto metadata catalog](https://github.com/jjrom/resto).
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
-  - [Collection example](examples/collection.json): Shows the basic usage of the extension in a STAC Collection
+<!--  - [Collection example](examples/collection.json): Shows the basic usage of the extension in a STAC Collection
 - [JSON Schema](json-schema/schema.json)
-- [Changelog](./CHANGELOG.md)
+- [Changelog](./CHANGELOG.md) -->
 
 ## Item Properties and Collection Fields
 
-| Field Name           | Type                      | Description |
-| -------------------- | ------------------------- | ----------- |
-| template:new_field   | string                    | **REQUIRED**. Describe the required field... |
-| template:xyz         | [XYZ Object](#xyz-object) | Describe the field... |
-| template:another_one | \[number]                 | Describe the field... |
+| Field Name        | Type                        | Description                                          |
+| ----------------- | --------------------------- | ---------------------------------------------------- |
+| subjects:keywords | [string]                    | List of free keywords associated with the item       |
+| Subjects:terms    | [Term Object](#term-object) | A Term Object defining the list of associated terms. |
+
+One of the 2 above fields is REQUIRED.
 
 ### Additional Field Information
 
-#### template:new_field
+#### subjects:keywords
 
-This is a much more detailed description of the field `template:new_field`...
+The field `subjects:keywords` is open to any names or tag that are relevant to the item.
 
-### XYZ Object
+```json
+  "subjects:keywords": ["europe", "france", "paris"]
+```
+  
+### Term Object
 
-This is the introduction for the purpose and the content of the XYZ Object...
+The Term Object aim at defining a normalized list of terms based on a documented referencial (e.g. geonames).
+Each term has a unique identifier reprensenting its reference system and the term's identifier in that system.
 
-| Field Name  | Type   | Description |
-| ----------- | ------ | ----------- |
-| x           | number | **REQUIRED**. Describe the required field... |
-| y           | number | **REQUIRED**. Describe the required field... |
-| z           | number | **REQUIRED**. Describe the required field... |
+| Field Name | Type   | Description                                                                                                                        |
+| ---------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| id         | string | **REQUIRED**. Unique identifier of the term following the naming convention defined in section [Term identifier](#term-identifier) |
+| name       | string | Describe with a huiman readable word the term. Preferably, the same as in the reference system.                                    |
+| parentId   | string | Reference a parent term in case of hierarchical relationahip. See section                                                          |
 
-## Relation types
+#### Term identifier
 
-The following types should be used as applicable `rel` types in the
-[Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object).
+The field `id` specifies the term identifier as a `string` that follows the following naming convention:
 
-| Type                | Description |
-| ------------------- | ----------- |
-| fancy-rel-type      | This link points to a fancy resource. |
+```
+  <system_id>::<id>
+```
+
+For instance, the term 
+
+```
+  geonames::935877
+```
+
+is a term from the [GeoNames geographical database](https://www.geonames.org/) representing the [`Piton de la Fournaise`](https://www.geonames.org/935877).
+
+The list of supported systems is defined in the section Terms Reference Systems.
+
+#### Hierarchical relationship
+
+The field `parent_id` in the Term Object is used to define a hierarchical relationship between terms.
+
+Example, hierarchy of Zurich, Switzerland, Europe: http://api.geonames.org/hierarchy?geonameId=2657896&username=demo
+
+## Terms Reference Systems
+
+  | System    | Prefix     | Description                           |
+  | --------- | ---------- | ------------------------------------- |
+  | GeoNames  | `geonames` | [Geonames](https://www.geonames.org)  |
+  | Wikipedia | `wiki`     | [Wikipedia](https://en.wikipedia.org) |
 
 ## Contributing
 
