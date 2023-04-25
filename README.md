@@ -1,82 +1,57 @@
-# Subjects Extension Specification
+# Themes Extension Specification
 
-- **Title:** Subjects
-- **Identifier:** <https://stac-extensions.github.io/subjects/v1.0.0/schema.json>
-- **Field Name Prefix:** subjects
-- **Scope:** Item, Collection
+- **Title:** Themes
+- **Identifier:** <https://stac-extensions.github.io/themes/v1.0.0/schema.json>
+- **Field Name Prefix:** -
+- **Scope:** Item, Catalog, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @emmanuelmathot
+- **Owner**: @emmanuelmathot @m-mohr
 
-This document explains the Subjects Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-This extension is meant to support using free and normalized keywords. particulary useful when searching for datasets within catalogs with free terms and subjects but also with normalized definition (e.g. geonames).
-This extension is inspired by the implementation made by [resto metadata catalog](https://github.com/jjrom/resto).
+This document explains the Themes Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
+This extension is meant to support knowledge organization systems used to classify the resource
+(i.e. controlled vocabularies / keywords such as [Geonames](https://www.geonames.org) or [Wikipedia](https://en.wikipedia.org)).
+If you just need "uncontrolled" free-form keywords / tags, please use the
+[`keywords` field](https://github.com/radiantearth/stac-spec/blob/main/item-spec/common-metadata.md#basics) instead.
+This extension is based on the field `themes` as defined in [OGC API - Records](https://github.com/opengeospatial/ogcapi-records).
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
-<!--  - [Collection example](examples/collection.json): Shows the basic usage of the extension in a STAC Collection
+  - [Collection example](examples/collection.json): Shows the basic usage of the extension in a STAC Collection
 - [JSON Schema](json-schema/schema.json)
-- [Changelog](./CHANGELOG.md) -->
+- [Changelog](./CHANGELOG.md)
 
-## Item Properties and Collection Fields
+## Fields
 
-| Field Name        | Type                        | Description                                          |
-| ----------------- | --------------------------- | ---------------------------------------------------- |
-| subjects:keywords | [string]                    | List of free keywords associated with the item       |
-| Subjects:terms    | [Term Object](#term-object) | A Term Object defining the list of associated terms. |
+The fields in the table below can be used in these parts of STAC documents:
+- [x] Catalogs
+- [x] Collections
+- [x] Item Properties (incl. Summaries in Collections)
+- [ ] Assets (for both Collections and Items, incl. Item Asset Definitions in Collections)
+- [ ] Links
 
-One of the 2 above fields is REQUIRED.
-
-### Additional Field Information
-
-#### subjects:keywords
-
-The field `subjects:keywords` is open to any names or tag that are relevant to the item.
-
-```json
-  "subjects:keywords": ["europe", "france", "paris"]
-```
+| Field Name | Type                             | Description |
+| ---------- | -------------------------------- | ----------- |
+| themes     | \[[Theme Object](#theme-object)]] | **REQUIRED.** A knowledge organization system used to classify the STAC entity. Each element is a concept and their respective knowledge organization system / controlled vocabulary. |
   
-### Term Object
+### Theme Object
 
-The Term Object aim at defining a normalized list of terms based on a documented referencial (e.g. geonames).
-Each term has a unique identifier reprensenting its reference system and the term's identifier in that system.
+The Theme Object aims at defining a normalized list of concepts based on a knowledge organization system / controlled vocabulary (e.g. geonames).
 
-| Field Name | Type   | Description                                                                                                                        |
-| ---------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| id         | string | **REQUIRED**. Unique identifier of the term following the naming convention defined in section [Term identifier](#term-identifier) |
-| name       | string | Describe with a huiman readable word the term. Preferably, the same as in the reference system.                                    |
-| parentId   | string | Reference a parent term in case of hierarchical relationahip. See section                                                          |
+| Field Name | Type                                  | Description |
+| ---------- | ------------------------------------- | ----------- |
+| concepts   | \[[Concept Object](#concept-object)] | **REQUIRED**. One or more entity/concept identifers from this knowledge system. |
+| scheme     | string                                | **REQUIRED**. An identifier for the knowledge organization system used. It is recommended that the identifier is a resolvable URI. |
 
-#### Term identifier
+### Concept Object
 
-The field `id` specifies the term identifier as a `string` that follows the following naming convention:
+Describes an individual concept from the knowledge system.
 
-```
-  <system_id>::<id>
-```
-
-For instance, the term 
-
-```
-  geonames::935877
-```
-
-is a term from the [GeoNames geographical database](https://www.geonames.org/) representing the [`Piton de la Fournaise`](https://www.geonames.org/935877).
-
-The list of supported systems is defined in the section Terms Reference Systems.
-
-#### Hierarchical relationship
-
-The field `parent_id` in the Term Object is used to define a hierarchical relationship between terms.
-
-Example, hierarchy of Zurich, Switzerland, Europe: http://api.geonames.org/hierarchy?geonameId=2657896&username=demo
-
-## Terms Reference Systems
-
-  | System    | Prefix     | Description                           |
-  | --------- | ---------- | ------------------------------------- |
-  | GeoNames  | `geonames` | [Geonames](https://www.geonames.org)  |
-  | Wikipedia | `wiki`     | [Wikipedia](https://en.wikipedia.org) |
+| Field Name  | Type   | Description |
+| ----------- | ------ | ----------- |
+| id          | string | **REQUIRED**. An identifier for the concept. |
+| title       | string | A human readable title for the concept. |
+| description | string | A human readable description for the concept. |
+| url         | string | *RECOMMENDED.* A URI providing further description of the concept. |
 
 ## Contributing
 
