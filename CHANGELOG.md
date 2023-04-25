@@ -16,4 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-[Unreleased]: <https://github.com/stac-extensions/themes/compare/v1.0.0...HEAD>
+## [0.0.1] - 2023-04-25
+
+- First release based on OGC API - Records
+
+[Unreleased]: <https://github.com/stac-extensions/themes/compare/v0.0.1...HEAD>
+[0.0.1]: <https://github.com/stac-extensions/themes/tree/0.0.1>

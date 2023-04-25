@@ -1,7 +1,7 @@
 # Themes Extension Specification
 
 - **Title:** Themes
-- **Identifier:** <https://stac-extensions.github.io/themes/v1.0.0/schema.json>
+- **Identifier:** <https://stac-extensions.github.io/themes/v0.0.1/schema.json>
 - **Field Name Prefix:** -
 - **Scope:** Item, Catalog, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
