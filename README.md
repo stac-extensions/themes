@@ -31,7 +31,7 @@ The fields in the table below can be used in these parts of STAC documents:
 
 | Field Name | Type                             | Description |
 | ---------- | -------------------------------- | ----------- |
-| themes     | \[[Theme Object](#theme-object)]] | **REQUIRED.** A knowledge organization system used to classify the STAC entity. Each element is a concept and their respective knowledge organization system / controlled vocabulary. |
+| themes     | \[[Theme Object](#theme-object)] | **REQUIRED.** A knowledge organization system used to classify the STAC entity. Each element is a concept and their respective knowledge organization system / controlled vocabulary. |
   
 ### Theme Object
 
