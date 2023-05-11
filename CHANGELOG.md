@@ -26,4 +26,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Unreleased]: <https://github.com/stac-extensions/themes/compare/v1.0.0...HEAD>
 [1.0.0]: <https://github.com/stac-extensions/themes/compare/v0.0.1...v1.0.0>
-[0.0.1]: <https://github.com/stac-extensions/themes/tree/0.0.1>
+[0.0.1]: <https://github.com/stac-extensions/themes/tree/v0.0.1>
