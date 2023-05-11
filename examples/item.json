@@ -1,7 +1,7 @@
 {
   "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/themes/v0.0.1/schema.json"
+    "https://stac-extensions.github.io/themes/v1.0.0/schema.json"
   ],
   "type": "Feature",
   "id": "example",
